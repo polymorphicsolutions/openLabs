@@ -1,0 +1,170 @@
+<!DOCTYPE html> 
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <link rel="stylesheet" href="themes/openLabsTheme.min.css" />
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile.structure-1.3.2.min.css" />
+    <title>Open Labs</title> 
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
+    <script>
+      var incoming = window.location.search;
+      if (incoming.substring(0, 1) == '?')
+      {
+        incoming = incoming.substring(1);
+      }
+
+      function setCookie(c_name, value, exdays)
+      {
+        var exdate = new Date();
+        exdate.setDate(exdate.getDate() + exdays);
+        var c_value = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toUTCString());
+        document.cookie = c_name + "=" + c_value;
+      }
+    </script>
+    <style>
+      .page
+      {
+        margin: 0 auto;
+        overflow-x: hidden;
+        background:#001f44;
+      }
+      h1, h4
+      {
+        margin: 0 auto;
+        overflow-x: hidden;
+      }
+      .head, .foot
+      {
+        margin: 0 auto;
+        overflow-x: hidden;
+        background:#c2011b;
+      }
+      .buttons
+      {
+        margin: 0 auto;
+        width: 300px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        overflow-x: hidden;
+        background:#001f44;
+        color:blue;
+      }
+      .searchbar
+      {
+        width: 350px;
+        background:#001f44;
+      }
+    </style>
+  </head> 
+
+  <body> 
+
+    <div data-role="page" class="page">
+
+      <div data-role="header" data-theme="a" class="head" data-position="fixed">
+        <button onclick="location.reload(true)" data-icon="refresh" class="ui-btn-left">Refresh</button>
+        <!--<h1>Radford University</h1>-->
+        <h1>Open Labs</h1>
+        <a href="settings.html" data-icon="gear" class="ui-btn-right">Settings</a>
+      </div><!-- /header -->
+
+      <!--<div data-role="fieldcontain">
+      <!--<label for="search-2">Search Labs:</label>-->
+      <input type="search" name="search-2" id="search-2" value="Search" class="searchbar" />
+      <!--</div>-->
+
+      <div data-role="content" class="buttons">
+        <div data-role="collapsible">
+          <h3>Cook Hall</h3>
+          <a href="labs/labInfo.html" data-role="button" onclick=setCookie("labName", "Cook 124", 7)>Cook 124</a>
+          <a href="labs/labInfo.html" data-role="button">Cook 125</a>
+          <a href="labs/labInfo.html" data-role="button">Cook 222</a>
+        </div>
+        <div data-role="collapsible">
+          <h3>Curie Hall</h3>
+          <a href="labs/labInfo.html" data-role="button">Curie 033</a>
+          <a href="labs/labInfo.html" data-role="button">Curie 147</a>
+        </div>
+        <div data-role="collapsible">
+          <h3>Davis Hall</h3>
+          <a href="labs/labInfo.html" data-role="button">Davis B18</a>
+          <a href="labs/labInfo.html" data-role="button">Davis 114</a>
+          <a href="labs/labInfo.html" data-role="button">Davis 201</a>
+          <a href="labs/labInfo.html" data-role="button">Davis 214</a>
+          <a href="labs/labInfo.html" data-role="button">Davis 214c</a>
+          <a href="labs/labInfo.html" data-role="button">Davis 225</a>
+        </div>
+        <div data-role="collapsible">
+          <h3>Dedmon Center</h3>
+          <a href="labs/labInfo.html" data-role="button">Dedmon 225</a>
+        </div>
+        <div data-role="collapsible">
+          <h3>Hurlburt Student Center</h3>
+          <a href="labs/labInfo.html" data-role="button">Hurlburt 201</a>
+        </div>
+        <div data-role="collapsible">
+          <h3>McConnell Library</h3>
+          <a href="labs/labInfo.html" data-role="button">McConnell 350</a>
+          <a href="labs/labInfo.html" data-role="button">McConnell 380</a>
+          <a href="labs/labInfo.html" data-role="button">McConnell 440</a>
+          <a href="labs/labInfo.html" data-role="button">McConnell 562</a>
+        </div>
+        <div data-role="collapsible">
+          <h3>McGuffey Hall</h3>
+          <a href="labs/labInfo.html" data-role="button">McGuffey 220</a>
+          <a href="labs/labInfo.html" data-role="button">McGuffey 238</a>
+        </div>
+        <div data-role="collapsible">
+          <h3>Peters Hall</h3>
+          <a href="labs/labInfo.html" data-role="button">Peters C109</a>
+          <a href="labs/labInfo.html" data-role="button">Peters C144</a>
+        </div>
+        <div data-role="collapsible">
+          <h3>Porterfield Hall</h3>
+          <a href="labs/labInfo.html" data-role="button">Porterfield 173</a>
+          <a href="labs/labInfo.html" data-role="button">Porterfield 177</a>
+        </div>
+        <div data-role="collapsible">
+          <h3>Powell Hall</h3>
+          <a href="labs/labInfo.html" data-role="button">Powell 106</a>
+          <a href="labs/labInfo.html" data-role="button">Powell 211</a>
+        </div>
+        <div data-role="collapsible">
+          <h3>Russell Hall</h3>
+          <a href="labs/labInfo.html" data-role="button">Russell 251</a>
+          <a href="labs/labInfo.html" data-role="button">Russell 348</a>
+        </div>
+        <div data-role="collapsible">
+          <h3>Stuart Hall</h3>
+          <a href="labs/labInfo.html" data-role="button">Stuart B01</a>
+        </div>
+        <div data-role="collapsible">
+          <h3>Walker Hall</h3>
+          <a href="labs/labInfo.html" data-role="button">Walker 215</a>
+          <a href="labs/labInfo.html" data-role="button">Walker 216</a>
+          <a href="labs/labInfo.html" data-role="button">Walker 221</a>
+          <a href="labs/labInfo.html" data-role="button">Walker 222</a>
+          <a href="labs/labInfo.html" data-role="button">Walker 225</a>
+        </div>
+        <div data-role="collapsible">
+          <h3>Whitt Hall</h3>
+          <a href="labs/labInfo.html" data-role="button">Whitt 222</a>
+        </div>
+        <div data-role="collapsible">
+          <h3>Young Hall</h3>
+          <a href="labs/labinfo.html" data-role="button">Young 123</a>
+        </div>
+      </div><!-- /content -->
+
+      <div data-role="footer" data-theme="a" class="foot" data-position="fixed">
+        <h4>Radford University</h4>
+      </div><!-- /footer -->
+
+    </div><!-- /page -->
+
+  </body>
+</html>
