@@ -12,7 +12,7 @@
     <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
     <script>
       var incoming = window.location.search;
-      if (incoming.substring(0, 1) == '?')
+      if (incoming.substring(0, 1) === '?')
       {
         incoming = incoming.substring(1);
       }
@@ -80,7 +80,7 @@
       <div data-role="content" class="buttons">
         <div data-role="collapsible">
           <h3>Cook Hall</h3>
-          <a href="labs/labInfo.html" data-role="button" onclick=setCookie("labName", "Cook 124", 7)>Cook 124</a>
+          <a href="labs/labInfo.html" data-role="button" onclick="setCookie(labName, Cook124, 7)">Cook 124</a>
           <a href="labs/labInfo.html" data-role="button">Cook 125</a>
           <a href="labs/labInfo.html" data-role="button">Cook 222</a>
         </div>
