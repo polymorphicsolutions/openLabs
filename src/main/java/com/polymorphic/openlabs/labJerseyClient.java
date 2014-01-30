@@ -6,6 +6,8 @@
 
 package com.polymorphic.openlabs;
 
+import javax.ws.rs.client.WebTarget;
+
 /**
  * Jersey REST client generated for REST resource:LabFacadeREST
  * [com.polymorphic.openlabs.lab]<br>
