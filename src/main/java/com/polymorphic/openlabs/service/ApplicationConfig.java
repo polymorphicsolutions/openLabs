@@ -30,9 +30,9 @@ public class ApplicationConfig extends Application {
    * If required, comment out calling this method in getClasses().
    */
   private void addRestResourceClasses(Set<Class<?>> resources) {
-    resources.add(com.polymorphic.openlabs.service.ComputerFacadeREST.class);
-    resources.add(com.polymorphic.openlabs.service.HallFacadeREST.class);
-    resources.add(com.polymorphic.openlabs.service.LabFacadeREST.class);
+        resources.add(com.polymorphic.openlabs.service.ComputerFacadeREST.class);
+        resources.add(com.polymorphic.openlabs.service.HallFacadeREST.class);
+        resources.add(com.polymorphic.openlabs.service.LabFacadeREST.class);
   }
   
 }
