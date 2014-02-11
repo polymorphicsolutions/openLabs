@@ -88,69 +88,71 @@ public class TestServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
     
-	private void printHeader(PrintWriter out, HttpServletResponse response)
-            throws ServletException, IOException {
-            try {
-                /* TODO output your page here. You may use following sample code. */
-                out.println("  <head> ");
-                out.println("    <meta charset='utf-8'> ");
-                out.println("    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'/> ");
-                out.println("    <link rel='stylesheet' href='themes/openLabsTheme.min.css' /> ");
-                out.println("    <link rel='stylesheet' href='http://code.jquery.com/mobile/1.3.2/jquery.mobile.structure-1.3.2.min.css' /> ");
-                out.println("    <title>Open Labs</title>  ");
-                out.println("    <link rel='stylesheet' href='http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css' /> ");
-                out.println("    <script src='http://code.jquery.com/jquery-1.8.3.min.js'></script> ");
-                out.println("    <script src='http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js'></script> ");
-                out.println("    <script> ");
-                out.println("      var incoming = window.location.search; ");
-                out.println("      if (incoming.substring(0, 1) === '?') ");
-                out.println("      { ");
-                out.println("        incoming = incoming.substring(1); ");
-                out.println("      } ");
-                out.println(" ");
-                out.println("      function setCookie(c_name, value, exdays) ");
-                out.println("      { ");
-                out.println("        var exdate = new Date(); ");
-                out.println("        exdate.setDate(exdate.getDate() + exdays); ");
-                out.println("        var c_value = escape(value) + ((exdays == null) ? '' : '; expires=' + exdate.toUTCString()); ");
-                out.println("        document.cookie = c_name + '=' + c_value; ");
-                out.println("      } ");
-                out.println("    </script> ");
-                out.println("    <style> ");
-                out.println("      .page ");
-                out.println("      { ");
-                out.println("        margin: 0 auto; ");
-                out.println("        overflow-x: hidden; ");
-                out.println("        background:#001f44; ");
-                out.println("      } ");
-                out.println("      h1, h4 ");
-                out.println("      { ");
-                out.println("        margin: 0 auto; ");
-                out.println("        overflow-x: hidden; ");
-                out.println("      } ");
-                out.println("      .head, .foot ");
-                out.println("      { ");
-                out.println("        margin: 0 auto; ");
-                out.println("        overflow-x: hidden; ");
-                out.println("        background:#c2011b; ");
-                out.println("      } ");
-                out.println("      .buttons ");
-                out.println("      { ");
-                out.println("        margin: 0 auto; ");
-                out.println("        width: 300px; ");
-                out.println("        padding-top: 10px; ");
-                out.println("        padding-bottom: 10px; ");
-                out.println("        overflow-x: hidden; ");
-                out.println("        background:#001f44; ");
-                out.println("        color:blue; ");
-                out.println("      } ");
-                out.println("      .searchbar ");
-                out.println("      { ");
-                out.println("        width: 350px; ");
-                out.println("        background:#001f44; ");
-                out.println("      } ");
-                out.println("    </style> ");
-                out.println("  </head>  ");
+    private void printHeader(PrintWriter out, HttpServletResponse response)
+        throws ServletException, IOException {
+        try {
+
+            ///* old print
+            out.println("  <head> ");
+            out.println("    <meta charset=\"utf-8\"> ");
+            out.println("    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0\"/> ");
+            out.println("    <link rel=\"stylesheet\" href=\"themes/openLabsTheme.min.css\" /> ");
+            out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.3.2/jquery.mobile.structure-1.3.2.min.css\" /> ");
+            out.println("    <title>Open Labs</title>  ");
+            out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css\" /> ");
+            out.println("    <script src=\"http://code.jquery.com/jquery-1.8.3.min.js\"></script> ");
+            out.println("    <script src=\"http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js\"></script> ");
+            out.println("    <script> ");
+            out.println("      var incoming = window.location.search; ");
+            out.println("      if (incoming.substring(0, 1) === '?') ");
+            out.println("      { ");
+            out.println("        incoming = incoming.substring(1); ");
+            out.println("      } ");
+            out.println(" ");
+            out.println("      function setCookie(c_name, value, exdays) ");
+            out.println("      { ");
+            out.println("        var exdate = new Date(); ");
+            out.println("        exdate.setDate(exdate.getDate() + exdays); ");
+            out.println("        var c_value = escape(value) + ((exdays == null) ? \"\" : \"; expires=\" + exdate.toUTCString()); ");
+            out.println("        document.cookie = c_name + \"=\" + c_value; ");
+            out.println("      } ");
+            out.println("    </script> ");
+            out.println("    <style> ");
+            out.println("      .page ");
+            out.println("      { ");
+            out.println("        margin: 0 auto; ");
+            out.println("        overflow-x: hidden; ");
+            out.println("        background:#001f44; ");
+            out.println("      } ");
+            out.println("      h1, h4 ");
+            out.println("      { ");
+            out.println("        margin: 0 auto; ");
+            out.println("        overflow-x: hidden; ");
+            out.println("      } ");
+            out.println("      .head, .foot ");
+            out.println("      { ");
+            out.println("        margin: 0 auto; ");
+            out.println("        overflow-x: hidden; ");
+            out.println("        background:#c2011b; ");
+            out.println("      } ");
+            out.println("      .buttons ");
+            out.println("      { ");
+            out.println("        margin: 0 auto; ");
+            out.println("        width: 300px; ");
+            out.println("        padding-top: 10px; ");
+            out.println("        padding-bottom: 10px; ");
+            out.println("        overflow-x: hidden; ");
+            out.println("        background:#001f44; ");
+            out.println("        color:blue; ");
+            out.println("      } ");
+            out.println("      .searchbar ");
+            out.println("      { ");
+            out.println("        width: 350px; ");
+            out.println("        background:#001f44; ");
+            out.println("      } ");
+            out.println("    </style> ");
+            out.println("  </head>  ");
+            //*/
         } finally {
             //out.close();
         }
@@ -166,25 +168,25 @@ public class TestServlet extends HttpServlet {
             
             
             out.println("");
-            out.println("    <div data-role='page' class='page'>");
+            out.println("    <div data-role=\"page\" class=\"page\">");
             out.println("");
-            out.println("      <div data-role='header' data-theme='a' class='head' data-position='fixed'>");
-            out.println("        <button onclick='location.reload(true)' data-icon='refresh' class='ui-btn-left'>Refresh</button>");
+            out.println("      <div data-role=\"header\" data-theme=\"a\" class=\"head\" data-position=\"fixed\">");
+            out.println("        <button onclick=\"location.reload(true)\" data-icon=\"refresh\" class=\"ui-btn-left\">Refresh</button>");
             out.println("        <!--<h1>Radford University</h1>-->");
             out.println("        <h1>Open Labs</h1>");
-            out.println("        <a href='settings.html' data-icon='gear' class='ui-btn-right'>Settings</a>");
+            out.println("        <a href=\"settings.html\" data-icon=\"gear\" class=\"ui-btn-right\">Settings</a>");
             out.println("      </div><!-- /header -->");
             out.println("");
-            out.println("      <!--<div data-role='fieldcontain'>");
-            out.println("      <!--<label for='search-2'>Search Labs:</label>-->");
-            out.println("      <input type='search' name='search-2' id='search-2' value='Search' class='searchbar' />");
+            out.println("      <!--<div data-role=\"fieldcontain\">");
+            out.println("      <!--<label for=\"search-2\">Search Labs:</label>-->");
+            out.println("      <input type=\"search\" name=\"search-2\" id=\"search-2\" value=\"Search\" class=\"searchbar\" />");
             out.println("      <!--</div>-->");
             out.println("");
             
             printLabs(out,response);
             
             out.println("");
-            out.println("      <div data-role='footer' data-theme='a' class='foot' data-position='fixed'>");
+            out.println("      <div data-role=\"footer\" data-theme=\"a\" class=\"foot\" data-position=\"fixed\">");
             out.println("        <h4>Radford University</h4>");
             out.println("      </div><!-- /footer -->");
             out.println("");
@@ -201,24 +203,22 @@ public class TestServlet extends HttpServlet {
         LabSOAPHandler lsh = new LabSOAPHandler();
         try {
             ArrayList<HashMap<String,String>> data = lsh.getData();
-            out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-            out.println("<H1>~~~~~");
-            out.println(data.size());
-            out.println("~~~~~</h1>");
+            
             for(int i = 0; i < data.size(); i++){
                 //todo: change this to string appends
-                out.println("<p>" + 
+                //<button class="ui-btn">Button</button>
+                out.println("<button class=\"ui-btn\">" + 
                             data.get(i).get("availableCount") +
                             " / " +
                             data.get(i).get("totalCount") + 
                             " - " +
                             data.get(i).get("groupDescription") +
-                            "</p>");
+                            "</button>");
             }
         } catch (Exception ex) {
             Logger.getLogger(TestServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        out.println("<h1>AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</h1>");
+        //out.println("<h1>AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</h1>");
     }
 
 }
