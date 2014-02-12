@@ -9,6 +9,7 @@ package com.polymorphic.openlabs;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,7 +43,7 @@ public class TestServlet extends HttpServlet {
 			out.println("<html> ");
 			out.println(" ");
 			printHeader(out, response);
-			printBody(out, response);
+			printBody(out,request, response);
 			out.println("</html> ");
         } finally {
             out.close();
@@ -158,7 +159,7 @@ public class TestServlet extends HttpServlet {
         }
     }
 	
-    private void printBody(PrintWriter out, HttpServletResponse response)
+    private void printBody(PrintWriter out, HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         try {
             /* TODO output your page here. You may use following sample code. */
@@ -181,7 +182,7 @@ public class TestServlet extends HttpServlet {
             out.println("      <!--</div>-->");
             out.println("");
             
-            printLabs(out,response);
+            printLabs(out,request,response);
             
             out.println("");
             out.println("      <div data-role=\"footer\" data-theme=\"a\" class=\"foot\" data-position=\"fixed\">");
@@ -197,10 +198,25 @@ public class TestServlet extends HttpServlet {
         }
     }
     
-    private void printLabs(PrintWriter out, HttpServletResponse response){
+    //HttpServletRequest request, HttpServletResponse response
+    private void printLabs(PrintWriter out, HttpServletRequest request, HttpServletResponse response){
         LabSOAPHandler lsh = new LabSOAPHandler();
         try {
             ArrayList<HashMap<String,String>> data = lsh.getData();
+            
+            String toSortBy = request.getParameter("sortBy");
+            
+            if(toSortBy == null){ toSortBy = "groupDescription"; }
+            
+            
+            //TODO: should I be checking for null here instead?
+            if(toSortBy.equals("availableCount")){
+                Collections.sort(data, new labArrayHashComparator(toSortBy));
+                Collections.reverse(data);
+            } else if(!toSortBy.equals("")){
+                //data = sortLabs(toSortBy,data);
+                Collections.sort(data, new labArrayHashComparator(toSortBy));
+            }
             
             for(int i = 0; i < data.size(); i++){
                 //todo: change this to string appends
