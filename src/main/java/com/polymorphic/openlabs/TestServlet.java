@@ -165,8 +165,6 @@ public class TestServlet extends HttpServlet {
             out.println(" ");
             out.println("  <body> ");
             
-            
-            
             out.println("");
             out.println("    <div data-role=\"page\" class=\"page\">");
             out.println("");
@@ -207,18 +205,21 @@ public class TestServlet extends HttpServlet {
             for(int i = 0; i < data.size(); i++){
                 //todo: change this to string appends
                 //<button class="ui-btn">Button</button>
-                out.println("<button class=\"ui-btn\">" + 
+                //out.println("<button class=\"ui-btn\">" +
+                out.println("<a href=\"LabDetailServlet?name=" +
+                            data.get(i).get("groupId").replaceAll("\\s", "") +
+                            "\" data-role=\"button\" >" + 
                             data.get(i).get("availableCount") +
                             " / " +
                             data.get(i).get("totalCount") + 
                             " - " +
                             data.get(i).get("groupDescription") +
-                            "</button>");
+                            "</a>");
             }
         } catch (Exception ex) {
             Logger.getLogger(TestServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //out.println("<h1>AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</h1>");
     }
 
 }
+//http://localhost:8084/openLabs/TestServlet#/openLabs/LabDetailServlet?name=YoungLab
