@@ -197,7 +197,7 @@ public class TestServlet extends HttpServlet {
             out.println("  </body>");
 
         } finally {
-            //out.close();
+            //out.close(); 
         }
     }
     
@@ -239,12 +239,26 @@ public class TestServlet extends HttpServlet {
             }
             
             for(int i = 0; i < data.size(); i++){
+                double percent = Double.parseDouble(data.get(i).get("percentInUse"));
+                //double percent = Math.random();
+                String light = "greylight.png";
+                if(percent < 0.40){
+                    light = "greenlight.png";
+                } else if (percent < 1.00){
+                    light = "yellowlight.png";
+                } else {
+                    light = "redlight.png";
+                }
+                
+                
                 //todo: change this to string appends
                 //<button class="ui-btn">Button</button>
                 //out.println("<button class=\"ui-btn\">" +
                 out.println("<a href=\"LabDetailServlet?name=" +
                             data.get(i).get("groupId").replaceAll("\\s", "") +
                             "\" data-role=\"button\" >" + 
+                            "<img src=\"" + light + "\" alt=\" " + light + "\">" + 
+                            "&nbsp; &nbsp;" +
                             data.get(i).get("availableCount") +
                             " / " +
                             data.get(i).get("totalCount") + 
