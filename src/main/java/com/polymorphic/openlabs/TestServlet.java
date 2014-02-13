@@ -186,7 +186,10 @@ public class TestServlet extends HttpServlet {
             
             out.println("");
             out.println("      <div data-role=\"footer\" data-theme=\"a\" class=\"foot\" data-position=\"fixed\">");
-            out.println("        <h4>Radford University</h4>");
+            out.print("        <h4>Radford University</h4>");
+            
+            printSortMenu(out);
+            
             out.println("      </div><!-- /footer -->");
             out.println("");
             out.println("    </div><!-- /page -->");
@@ -196,6 +199,23 @@ public class TestServlet extends HttpServlet {
         } finally {
             //out.close();
         }
+    }
+    
+    private void printSortMenu(PrintWriter out){
+    //see data-icon below    
+    //<a href="#popupMenu" data-rel="popup" data-role="button" data-inline="true" data-transition="slideup" data-icon="gear" data-theme="e">Sort</a>
+        // with hrefs
+        out.println("<a href=\"#popupMenu\" data-rel=\"popup\" data-role=\"button\" data-inline=\"true\" >Sort</a>");        
+        out.println("<div data-role=\"popup\" id=\"popupMenu\" data-theme=\"d\">");
+        out.println("   <ul data-role=\"listview\" data-inset=\"true\" style=\"min-width:210px;\" data-theme=\"d\">");
+        out.println("        <li data-role=\"divider\" data-theme=\"e\">Choose an action</li>");
+        out.println("        <li><a href=\"TestServlet?sortBy=groupDescription\">group description</a></li>");
+        out.println("        <li><a href=\"TestServlet?sortBy=groupName\">group name</a></li>");
+        out.println("        <li><a href=\"TestServlet?sortBy=availableCount\">total available</a></li>");
+        out.println("        <li><a href=\"TestServlet?sortBy=groupDescription\">Delete</a></li>");
+        out.println("    </ul>");
+        out.println("</div>");
+                
     }
     
     //HttpServletRequest request, HttpServletResponse response
