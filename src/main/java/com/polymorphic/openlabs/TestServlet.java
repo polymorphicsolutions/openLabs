@@ -139,16 +139,15 @@ public class TestServlet extends HttpServlet {
             out.println("      .buttons ");
             out.println("      { ");
             out.println("        margin: 0 auto; ");
-            out.println("        width: 300px; ");
-            out.println("        padding-top: 10px; ");
-            out.println("        padding-bottom: 10px; ");
-            out.println("        overflow-x: hidden; ");
-            out.println("        background:#001f44; ");
-            out.println("        color:blue; ");
+            out.println("        max-width: 25em; ");
+            out.println("        padding-top: .2em; ");
+            out.println("        padding-bottom: .2em; ");
+            out.println("        background:white; ");
+            out.println("        color:black; ");
             out.println("      } ");
             out.println("      .searchbar ");
             out.println("      { ");
-            out.println("        width: 350px; ");
+            out.println("        max-width: 50em; ");
             out.println("        background:#001f44; ");
             out.println("      } ");
             out.println("    </style> ");
@@ -173,7 +172,7 @@ public class TestServlet extends HttpServlet {
             out.println("        <button onclick=\"location.reload(true)\" data-icon=\"refresh\" class=\"ui-btn-left\">Refresh</button>");
             out.println("        <!--<h1>Radford University</h1>-->");
             out.println("        <h1>Open Labs</h1>");
-            out.println("        <a href=\"settings.html\" data-icon=\"gear\" class=\"ui-btn-right\">Settings</a>");
+            printSortMenu(out);
             out.println("      </div><!-- /header -->");
             out.println("");
             out.println("      <!--<div data-role=\"fieldcontain\">");
@@ -188,7 +187,7 @@ public class TestServlet extends HttpServlet {
             out.println("      <div data-role=\"footer\" data-theme=\"a\" class=\"foot\" data-position=\"fixed\">");
             out.print("        <h4>Radford University</h4>");
             
-            printSortMenu(out);
+            
             
             out.println("      </div><!-- /footer -->");
             out.println("");
@@ -256,8 +255,8 @@ public class TestServlet extends HttpServlet {
                 //out.println("<button class=\"ui-btn\">" +
                 out.println("<a href=\"LabDetailServlet?name=" +
                             data.get(i).get("groupId").replaceAll("\\s", "") +
-                            "\" data-role=\"button\" >" + 
-                            "<img src=\"" + light + "\" alt=\" " + light + "\">" + 
+                            "\" data-role=\"button\" class=\"buttons\" >" + 
+                            "<div style=\"text-align:left\"><img src=\"" + light + "\" alt=\" " + light + "\"></div>" + 
                             "&nbsp; &nbsp;" +
                             data.get(i).get("availableCount") +
                             " / " +
