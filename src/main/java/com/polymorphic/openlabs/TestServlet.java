@@ -136,10 +136,27 @@ public class TestServlet extends HttpServlet {
             out.println("        overflow-x: hidden; ");
             out.println("        background:#c2011b; ");
             out.println("      } ");
+            out.println("      .container ");
+            out.println("      { ");
+            out.println("        overflow:hidden; ");
+            out.println("      } ");
+            out.println("      .header ");
+            out.println("      { ");
+            out.println("        margin: 0 auto; ");
+            out.println("        max-width: 25em; ");
+            out.println("        max-height: 5em; ");
+            out.println("        overflow: hidden; ");
+            out.println("        padding-top: .2em; ");
+            out.println("        padding-bottom: .2em; ");
+            out.println("        background:#001f44; ");
+            out.println("        color:white; ");
+            out.println("      } ");
             out.println("      .buttons ");
             out.println("      { ");
             out.println("        margin: 0 auto; ");
             out.println("        max-width: 25em; ");
+            out.println("        max-height: 5em; ");
+            out.println("        overflow: hidden; ");
             out.println("        padding-top: .2em; ");
             out.println("        padding-bottom: .2em; ");
             out.println("        background:white; ");
@@ -237,6 +254,8 @@ public class TestServlet extends HttpServlet {
                 Collections.sort(data, new labArrayHashComparator(toSortBy));
             }
             
+            out.println("<div class=\"header\"><div style=\"float:left\">Name</div><div style=\"float:right\">Available Spots</div></div>");
+            
             for(int i = 0; i < data.size(); i++){
                 double percent = Double.parseDouble(data.get(i).get("percentInUse"));
                 //double percent = Math.random();
@@ -255,14 +274,11 @@ public class TestServlet extends HttpServlet {
                 //out.println("<button class=\"ui-btn\">" +
                 out.println("<a href=\"LabDetailServlet?name=" +
                             data.get(i).get("groupId").replaceAll("\\s", "") +
-                            "\" data-role=\"button\" class=\"buttons\" >" + 
-                            "<div style=\"text-align:left\"><img src=\"" + light + "\" alt=\" " + light + "\"></div>" + 
-                            "&nbsp; &nbsp;" +
-                            data.get(i).get("availableCount") +
-                            " / " +
-                            data.get(i).get("totalCount") + 
-                            " - " +
-                            data.get(i).get("groupDescription") +
+                            "\" data-role=\"button\" data-icon=\"arrow-r\" data-iconpos=\"right\" class=\"buttons\" >" + 
+                            "<div class\"container\"><div class=\"left\" style=\"float:left;white-space:nowrap;overflow:hidden\"><img src=\"" + light + "\" alt=\" " + light + "\">" + "&nbsp;" +
+                            data.get(i).get("groupDescription") + "</div><div style=\"float:right;padding-right:.4em;max-width:1em\">" + "(" +
+                            data.get(i).get("availableCount") + ")" +
+                            "</div></div>" +
                             "</a>");
             }
         } catch (Exception ex) {
