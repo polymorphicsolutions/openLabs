@@ -101,8 +101,10 @@ public class TestServlet extends HttpServlet {
             out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.3.2/jquery.mobile.structure-1.3.2.min.css\" /> ");
             out.println("    <title>Open Labs</title>  ");
             out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css\" /> ");
-            out.println("    <script src=\"http://code.jquery.com/jquery-1.8.3.min.js\"></script> ");
-            out.println("    <script src=\"http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js\"></script> ");
+            //out.println("    <script src=\"http://code.jquery.com/jquery-1.8.3.min.js\"></script> ");
+            //out.println("    <script src=\"http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js\"></script> ");
+            out.println("    <script src=\"http://code.jquery.com/jquery-1.9.1.min.js\"></script> ");
+            out.println("    <script src=\"http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js\"></script> ");
             out.println("    <script> ");
             out.println("      var incoming = window.location.search; ");
             out.println("      if (incoming.substring(0, 1) === '?') ");
@@ -194,10 +196,12 @@ public class TestServlet extends HttpServlet {
             out.println("");
             out.println("      <!--<div data-role=\"fieldcontain\">");
             out.println("      <!--<label for=\"search-2\">Search Labs:</label>-->");
-            out.println("      <input type=\"search\" name=\"search-2\" id=\"search-2\" value=\"Search\" class=\"searchbar\" />");
+            //commented out for filterSearch
+            //out.println("      <input type=\"search\" name=\"search-2\" id=\"search-2\" value=\"Search\" class=\"searchbar\" />");
             out.println("      <!--</div>-->");
             out.println("");
             
+            printSearchBar(out);
             printLabs(out,request,response);
             
             out.println("");
@@ -215,6 +219,12 @@ public class TestServlet extends HttpServlet {
         } finally {
             //out.close(); 
         }
+    }
+    
+    private void printSearchBar(PrintWriter out){
+        out.println("<form>");
+        out.println("   <input type=\"text\" data-type=\"search\" id=\"filterable-input\">");
+        out.println("</form>");
     }
     
     private void printSortMenu(PrintWriter out){
@@ -256,6 +266,9 @@ public class TestServlet extends HttpServlet {
             
             out.println("<div class=\"header\"><div style=\"float:left\">Name</div><div style=\"float:right\">Available Spots</div></div>");
             
+            //filter stuff
+            out.println("<form data-filter=\"true\" data-input=\"#filterable-input\">");
+            
             for(int i = 0; i < data.size(); i++){
                 double percent = Double.parseDouble(data.get(i).get("percentInUse"));
                 //double percent = Math.random();
@@ -281,6 +294,9 @@ public class TestServlet extends HttpServlet {
                             "</div></div>" +
                             "</a>");
             }
+            
+            //filterable close
+            out.println("</form>");
         } catch (Exception ex) {
             Logger.getLogger(TestServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
