@@ -8,6 +8,18 @@
         <servlet-name>LabDetailServlet</servlet-name>
         <servlet-class>com.polymorphic.openlabs.LabDetailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>com.polymorphic.openlabs.Login</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loginPage</servlet-name>
+        <servlet-class>com.polymorphic.openlabs.loginPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Da201</servlet-name>
+        <servlet-class>com.polymorphic.openlabs.Da201</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TestServlet</servlet-name>
         <url-pattern>/TestServlet</url-pattern>
@@ -15,6 +27,18 @@
     <servlet-mapping>
         <servlet-name>LabDetailServlet</servlet-name>
         <url-pattern>/LabDetailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loginPage</servlet-name>
+        <url-pattern>/loginPage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Da201</servlet-name>
+        <url-pattern>/Da201</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

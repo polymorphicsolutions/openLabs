@@ -42,7 +42,7 @@ public class TestServlet extends HttpServlet {
 			out.println("<!DOCTYPE html> ");
 			out.println("<html> ");
 			out.println(" ");
-			printHeader(out, response);
+			printHead(out, response);
 			printBody(out,request, response);
 			out.println("</html> ");
         } finally {
@@ -89,7 +89,15 @@ public class TestServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
     
-    private void printHeader(PrintWriter out, HttpServletResponse response)
+    
+    /**
+     * Prints the head portion of the OpenLabs main page
+     * @param out
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
+    private void printHead(PrintWriter out, HttpServletResponse response)
         throws ServletException, IOException {
         try {
 
@@ -98,9 +106,10 @@ public class TestServlet extends HttpServlet {
             out.println("    <meta charset=\"utf-8\"> ");
             out.println("    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0\"/> ");
             out.println("    <link rel=\"stylesheet\" href=\"themes/openLabsTheme.min.css\" /> ");
-            out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.3.2/jquery.mobile.structure-1.3.2.min.css\" /> ");
+            //out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.3.2/jquery.mobile.structure-1.3.2.min.css\" /> ");
             out.println("    <title>Open Labs</title>  ");
-            out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css\" /> ");
+            //out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css\" /> ");
+            out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.css\" /> ");
             //out.println("    <script src=\"http://code.jquery.com/jquery-1.8.3.min.js\"></script> ");
             //out.println("    <script src=\"http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js\"></script> ");
             out.println("    <script src=\"http://code.jquery.com/jquery-1.9.1.min.js\"></script> ");
@@ -176,7 +185,15 @@ public class TestServlet extends HttpServlet {
             //out.close();
         }
     }
-	
+    
+    /**
+     * Prints the body portion of the OpenLabs main page
+     * @param out
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void printBody(PrintWriter out, HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         try {
@@ -207,9 +224,6 @@ public class TestServlet extends HttpServlet {
             out.println("");
             out.println("      <div data-role=\"footer\" data-theme=\"a\" class=\"foot\" data-position=\"fixed\">");
             out.print("        <h4>Radford University</h4>");
-            
-            
-            
             out.println("      </div><!-- /footer -->");
             out.println("");
             out.println("    </div><!-- /page -->");
