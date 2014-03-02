@@ -307,6 +307,9 @@ public class TestServlet extends HttpServlet {
                             data.get(i).get("availableCount") + ")" +
                             "</div></div>" +
                             "</a>");
+                
+                //available = total - (inUse + offCount)
+                
             }
             
             //filterable close

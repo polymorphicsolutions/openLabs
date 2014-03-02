@@ -20,10 +20,15 @@ public class Authenticator {
      */
     public boolean valid(String UName, String Pword){
         boolean valid = false;
-        if(UName.equals("admin")){
-            if(Pword.equals("pass")){
-                valid = true;
+        try{
+            if(UName.equals("admin")){
+                if(Pword.equals("pass")){
+                    valid = true;
+                }
             }
+        }
+        catch(Exception e){
+
         }
         return valid;
     }

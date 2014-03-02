@@ -40,8 +40,10 @@ public class Login extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Login</title>"); 
+            out.println("<title>Admin Login</title>"); 
             
+            out.println("</head>");
+            out.println("<body>");
             
             HttpSession whatever = request.getSession();
             Authenticator auth = new Authenticator();
@@ -50,14 +52,20 @@ public class Login extends HttpServlet {
             if(validity == true){
                 strValidity = "true";
             }
-            whatever.setAttribute("valid",strValidity);
+            whatever.setAttribute("admin",strValidity);
             
-            out.println(request.getSession().getAttribute("valid"));
-
+            //String loginSuccess = request.getSession().getAttribute("admin").toString();
             
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Login at " + request.getContextPath() + userName + password + "</h1>");
+            if(validity == true){
+                out.println("Login Success");
+                out.println("<a href=\"TestServlet\">Return to main page.</a>");
+            } else {
+                out.println("Login Failure");
+                out.println("<a href=\"TestServlet\">Return to main page.</a>");
+            }
+            
+            
+            //out.println("<h1>Servlet Login at " + request.getContextPath() + userName + password + "</h1>");
             out.println("</body>");
             out.println("</html>");
         } finally {

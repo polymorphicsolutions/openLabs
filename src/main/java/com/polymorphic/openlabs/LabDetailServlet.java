@@ -6,6 +6,7 @@
 
 package com.polymorphic.openlabs;
 
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -25,6 +27,7 @@ public class LabDetailServlet extends HttpServlet {
     
 
     String selectedLabName;
+    boolean admin;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,17 +45,37 @@ public class LabDetailServlet extends HttpServlet {
         try {
             /* TODO output your page here. You may use following sample code. */
             selectedLabName = "";
-            selectedLabName = request.getParameter("name");
+            admin = false;
             
+            selectedLabName = request.getParameter("name");
+            admin = checkAdmin(request);
+                       
             out.println("<!DOCTYPE html> ");
             out.println("<html> ");
             out.println(" ");
+            
             printHeader(out, response);
-            printBody(out, response);
+            printBody(request, out, response);                
+            
             out.println("</html> ");
         } finally {
             out.close();
         }
+    }
+    
+    public boolean checkAdmin(HttpServletRequest request){
+        boolean admin = false;
+        try{
+            String adminLoggedIn = request.getSession().getAttribute("admin").toString();
+            if(adminLoggedIn.equals("true")){
+                admin = true;
+                //out.println("<a href=\"logout\">Logout</a>");
+            }
+        }
+        catch(Exception e){
+            //out.println("<a href=\"loginPage\">Login</a>");
+        }
+        return admin;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -164,7 +187,7 @@ public class LabDetailServlet extends HttpServlet {
         }
     }
 	
-    private void printBody(PrintWriter out, HttpServletResponse response)
+    private void printBody(HttpServletRequest request, PrintWriter out, HttpServletResponse response)
         throws ServletException, IOException {
         try {
             /* TODO output your page here. You may use following sample code. */
@@ -187,11 +210,26 @@ public class LabDetailServlet extends HttpServlet {
             out.println("      <!--</div>-->");
             out.println("");
             
-            printLabs(out,response);
-            
+            if(admin == false){
+                printLabs(out,response);
+            } else {
+                printLabsAdmin(out,response);
+            }
             out.println("");
             out.println("      <div data-role=\"footer\" data-theme=\"a\" class=\"foot\" data-position=\"fixed\">");
-            out.println("        <h4>Radford University</h4>");
+            //out.println("        <h4>Radford University</h4>");
+            out.print("        <h4>Radford University ");
+            
+            //loginPortion(request, out,response);
+            if(admin == false){
+                out.println("<a href=\"loginPage\">Login</a>");
+            } else {
+                out.println("<a href=\"Logout\">Log out</a>");
+            }
+            
+            out.println("</h4>");
+            
+            
             out.println("      </div><!-- /footer -->");
             out.println("");
             out.println("    </div><!-- /page -->");
@@ -221,11 +259,80 @@ public class LabDetailServlet extends HttpServlet {
                 out.println("<h2>" + labData.get("groupDescription") + "</h1>");
                 out.println("<h3>" + labData.get("totalCount") + " computers total </h3>");
                 out.println("<h3>" + labData.get("availableCount") + " computers unocupied </h3>");
+                out.println("<hr>");
+                out.println("<table>");
+                out.println("  <tr>");
+                out.println("    <td>");
+                out.println("      M");
+                out.println("    </td>");
+                out.println("    <td>");
+                out.println("      6:00 - 12:00 (bad data)");
+                out.println("    </td>");
+                out.println("  </tr>");
+                out.println("  <tr>");
+                out.println("    <td>");
+                out.println("      T");
+                out.println("    </td>");
+                out.println("    <td>");
+                out.println("      6:00 - 12:00 (bad data)");
+                out.println("    </td>");
+                out.println("  </tr>");
+                out.println("  <tr>");
+                out.println("    <td>");
+                out.println("      W");
+                out.println("    </td>");
+                out.println("    <td>");
+                out.println("      6:00 - 12:00 (bad data)");
+                out.println("    </td>");
+                out.println("  </tr>");
+                out.println("  <tr>");
+                out.println("    <td>");
+                out.println("      TR");
+                out.println("    </td>");
+                out.println("    <td>");
+                out.println("      6:00 - 12:00 (bad data)");
+                out.println("    </td>");
+                out.println("  </tr>");
+                out.println("  <tr>");
+                out.println("    <td>");
+                out.println("      F");
+                out.println("    </td>");
+                out.println("    <td>");
+                out.println("      6:00 - 12:00 (bad data)");
+                out.println("    </td>");
+                out.println("  </tr>");
+                out.println("  <tr>");
+                out.println("    <td>");
+                out.println("      Sa");
+                out.println("    </td>");
+                out.println("    <td>");
+                out.println("      6:00 - 12:00 (bad data)");
+                out.println("    </td>");
+                out.println("  </tr>");
+                out.println("  <tr>");
+                out.println("    <td>");
+                out.println("      Su");
+                out.println("    </td>");
+                out.println("    <td>");
+                out.println("      6:00 - 12:00 (bad data)");
+                out.println("    </td>");
+                out.println("  </tr>");
+                out.println("</table>");
+                
+                out.println("<br><br>");
+                
+                out.println("<table>");
+                out.println("  <tr>");
+                out.println("    <td>");
+                out.println("Available Sofware");
+                out.println("    </td>");
+                out.println("  </tr>");
+                out.println("</table>");
             } else {
-                out.println("No lab was specified. Or, data could not be retrieved");
+                out.println("No lab was specified. Or data could not be retrieved");
             }
         } catch (Exception ex) {
-            Logger.getLogger(TestServlet.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(TestServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         /*
         out.println("<button class=\"ui-btn\">" +
@@ -234,4 +341,103 @@ public class LabDetailServlet extends HttpServlet {
 
     }
 
+    private void printLabsAdmin(PrintWriter out, HttpServletResponse response){
+        
+        LabSOAPHandler lsh = new LabSOAPHandler();
+        
+        try {
+            ArrayList<HashMap<String,String>> data = lsh.getData();
+            HashMap<String,String> labData = new HashMap<String,String>();
+            
+            for(int i = 0; i < data.size(); i++){               
+                if(data.get(i).get("groupId").equals(selectedLabName)){
+                    labData = data.get(i);  
+                }
+            }
+            
+            if(labData.size() > 0){
+                out.println("<h2>" + labData.get("groupDescription") + "</h1>");
+                out.println("<h3>" + labData.get("totalCount") + " computers total </h3>");
+                out.println("<h3>" + labData.get("availableCount") + " computers unocupied </h3>");
+                out.println("<hr>");
+                out.println("<table>");
+                out.println("  <tr>");
+                out.println("    <td>");
+                out.println("      M");
+                out.println("    </td>");
+                out.println("    <td>");
+                out.println("      6:00 - 12:00 (bad data)");
+                out.println("    </td>");
+                out.println("  </tr>");
+                out.println("  <tr>");
+                out.println("    <td>");
+                out.println("      T");
+                out.println("    </td>");
+                out.println("    <td>");
+                out.println("      6:00 - 12:00 (bad data)");
+                out.println("    </td>");
+                out.println("  </tr>");
+                out.println("  <tr>");
+                out.println("    <td>");
+                out.println("      W");
+                out.println("    </td>");
+                out.println("    <td>");
+                out.println("      6:00 - 12:00 (bad data)");
+                out.println("    </td>");
+                out.println("  </tr>");
+                out.println("  <tr>");
+                out.println("    <td>");
+                out.println("      TR");
+                out.println("    </td>");
+                out.println("    <td>");
+                out.println("      6:00 - 12:00 (bad data)");
+                out.println("    </td>");
+                out.println("  </tr>");
+                out.println("  <tr>");
+                out.println("    <td>");
+                out.println("      F");
+                out.println("    </td>");
+                out.println("    <td>");
+                out.println("      6:00 - 12:00 (bad data)");
+                out.println("    </td>");
+                out.println("  </tr>");
+                out.println("  <tr>");
+                out.println("    <td>");
+                out.println("      Sa");
+                out.println("    </td>");
+                out.println("    <td>");
+                out.println("      6:00 - 12:00 (bad data)");
+                out.println("    </td>");
+                out.println("  </tr>");
+                out.println("  <tr>");
+                out.println("    <td>");
+                out.println("      Su");
+                out.println("    </td>");
+                out.println("    <td>");
+                out.println("      <input type=\"text\" value=\"6:00 - 12:00 (bad data)\"/>");
+                out.println("    </td>");
+                out.println("  </tr>");
+                out.println("</table>");
+                
+                out.println("<br><br>");
+                
+                out.println("<table>");
+                out.println("  <tr>");
+                out.println("    <td>");
+                out.println("Available Sofware");
+                out.println("    </td>");
+                out.println("  </tr>");
+                out.println("</table>");
+            } else {
+                out.println("No lab was specified. Or data could not be retrieved");
+            }
+        } catch (Exception ex) {
+            //Logger.getLogger(TestServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }    
+    
+    
+    
+    
 }
