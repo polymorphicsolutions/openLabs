@@ -27,6 +27,7 @@ public class LabDetailServlet extends HttpServlet {
     
 
     String selectedLabName;
+
     boolean admin;
     
     /**
@@ -43,12 +44,13 @@ public class LabDetailServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            /* TODO output your page here. You may use following sample code. */
-            selectedLabName = "";
-            admin = false;
             
+            admin = SessionHandler.checkAdmin(request.getSession(),request);
+            
+            //SessionHandler.checkNewFavorite(response,request);
+            
+            selectedLabName = "";
             selectedLabName = request.getParameter("name");
-            admin = checkAdmin(request);
                        
             out.println("<!DOCTYPE html> ");
             out.println("<html> ");
@@ -62,21 +64,7 @@ public class LabDetailServlet extends HttpServlet {
             out.close();
         }
     }
-    
-    public boolean checkAdmin(HttpServletRequest request){
-        boolean admin = false;
-        try{
-            String adminLoggedIn = request.getSession().getAttribute("admin").toString();
-            if(adminLoggedIn.equals("true")){
-                admin = true;
-                //out.println("<a href=\"logout\">Logout</a>");
-            }
-        }
-        catch(Exception e){
-            //out.println("<a href=\"loginPage\">Login</a>");
-        }
-        return admin;
-    }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -211,9 +199,9 @@ public class LabDetailServlet extends HttpServlet {
             out.println("");
             
             if(admin == false){
-                printLabs(out,response);
+                printLabs(out,response,request);
             } else {
-                printLabsAdmin(out,response);
+                printLabsAdmin(out,response, request);
             }
             out.println("");
             out.println("      <div data-role=\"footer\" data-theme=\"a\" class=\"foot\" data-position=\"fixed\">");
@@ -222,7 +210,11 @@ public class LabDetailServlet extends HttpServlet {
             
             //loginPortion(request, out,response);
             if(admin == false){
-                out.println("<a href=\"loginPage\">Login</a>");
+                
+                out.println("<a href=\"loginPage"
+                        + "?name="
+                        + selectedLabName
+                        + "\">Login</a>");
             } else {
                 out.println("<a href=\"Logout\">Log out</a>");
             }
@@ -241,7 +233,7 @@ public class LabDetailServlet extends HttpServlet {
         }
     }
     
-    private void printLabs(PrintWriter out, HttpServletResponse response){
+    private void printLabs(PrintWriter out, HttpServletResponse response, HttpServletRequest req){
         
         LabSOAPHandler lsh = new LabSOAPHandler();
         
@@ -328,6 +320,21 @@ public class LabDetailServlet extends HttpServlet {
                 out.println("    </td>");
                 out.println("  </tr>");
                 out.println("</table>");
+                
+                out.println("<br>");
+                
+                if(SessionHandler.favoriteCheck(req, selectedLabName)){
+                    out.println("<a href=\"TestServlet?unFavorite=" + 
+                            selectedLabName
+                            + "\">UnFavorite</a>");
+                }
+                else {
+                    out.println("<a href=\"TestServlet?favorite=" + 
+                            selectedLabName
+                            + "\">Favorite</a>");
+                }
+                
+                out.println("<br>");
             } else {
                 out.println("No lab was specified. Or data could not be retrieved");
             }
@@ -341,7 +348,7 @@ public class LabDetailServlet extends HttpServlet {
 
     }
 
-    private void printLabsAdmin(PrintWriter out, HttpServletResponse response){
+    private void printLabsAdmin(PrintWriter out, HttpServletResponse response, HttpServletRequest req){
         
         LabSOAPHandler lsh = new LabSOAPHandler();
         
@@ -428,6 +435,9 @@ public class LabDetailServlet extends HttpServlet {
                 out.println("    </td>");
                 out.println("  </tr>");
                 out.println("</table>");
+                
+                
+                
             } else {
                 out.println("No lab was specified. Or data could not be retrieved");
             }

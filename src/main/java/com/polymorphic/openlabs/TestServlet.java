@@ -24,6 +24,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class TestServlet extends HttpServlet {
 
+    
+    boolean refreshRequired;
+    String nFavorite;
+    String nUnFavorite;
+    
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,14 +43,28 @@ public class TestServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        
         try {
+            refreshRequired = false;
+
+            nFavorite = SessionHandler.checkNewFavorite(response, request);
+            if(nFavorite != null)
+                refreshRequired = true;
+            nUnFavorite = SessionHandler.checkUnFavorite(response,request);
+            if(nUnFavorite != null)
+                refreshRequired = true;
+            //checkUnFavorite
+            
             /* TODO output your page here. You may use following sample code. */
-			out.println("<!DOCTYPE html> ");
-			out.println("<html> ");
-			out.println(" ");
-			printHead(out, response);
-			printBody(out,request, response);
-			out.println("</html> ");
+            out.println("<!DOCTYPE html> ");
+            out.println("<html> ");
+            out.println(" ");
+
+
+            printHead(out, response);
+            printBody(out,request, response);
+            out.println("</html> ");
         } finally {
             out.close();
         }
@@ -104,6 +124,16 @@ public class TestServlet extends HttpServlet {
             ///* old print
             out.println("  <head> ");
             out.println("    <meta charset=\"utf-8\"> ");
+            
+            /*
+            //refresh section
+            if(refreshRequired == true){
+                out.println("<meta http-equiv=\"refresh\" content=\"1\">");
+            }
+            //refresh section
+            */
+            
+            
             out.println("    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0\"/> ");
             out.println("    <link rel=\"stylesheet\" href=\"themes/openLabsTheme.min.css\" /> ");
             //out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.3.2/jquery.mobile.structure-1.3.2.min.css\" /> ");
@@ -258,11 +288,27 @@ public class TestServlet extends HttpServlet {
                 
     }
     
+    /*
+    private void printLabs2(PrintWriter out, HttpServletRequest request, HttpServletResponse response){
+        labs = process lab data
+        for(int i=0; i<labs.size(); i++){
+        
+        }
+    }
+    */
+    
     //HttpServletRequest request, HttpServletResponse response
     private void printLabs(PrintWriter out, HttpServletRequest request, HttpServletResponse response){
         LabSOAPHandler lsh = new LabSOAPHandler();
         try {
+            ArrayList<String> favorites = SessionHandler.favoriteCheck(request);
+            if(nFavorite != null){
+                favorites.add(nFavorite);}
+            if(nUnFavorite != null){
+                favorites.remove(nUnFavorite);}
+            
             ArrayList<HashMap<String,String>> data = lsh.getData();
+            lsh.addFavorites(favorites, data);
             
             String toSortBy = request.getParameter("sortBy");
             
@@ -277,6 +323,9 @@ public class TestServlet extends HttpServlet {
                 //data = sortLabs(toSortBy,data);
                 Collections.sort(data, new labArrayHashComparator(toSortBy));
             }
+            
+            //todo:make sure this isn't goofing up sort
+            //Collections.sort(data, new labArrayHashComparator("favorite"));
             
             out.println("<div class=\"header\"><div style=\"float:left\">Name</div><div style=\"float:right\">Available Spots</div></div>");
             
@@ -295,6 +344,14 @@ public class TestServlet extends HttpServlet {
                     light = "redlight.png";
                 }
                 
+                String favorite = " =( ";
+                for(int j = 0; j < favorites.size(); j++){
+                    if(favorites.get(j).equals(data.get(i).get("groupId"))){
+                        favorite = "<b>FAVORITED</b>";
+                    }
+                }
+                
+                
                 
                 //todo: change this to string appends
                 //<button class="ui-btn">Button</button>
@@ -303,8 +360,11 @@ public class TestServlet extends HttpServlet {
                             data.get(i).get("groupId").replaceAll("\\s", "") +
                             "\" data-role=\"button\" data-icon=\"arrow-r\" data-iconpos=\"right\" class=\"buttons\" >" + 
                             "<div class\"container\"><div class=\"left\" style=\"float:left;white-space:nowrap;overflow:hidden\"><img src=\"" + light + "\" alt=\" " + light + "\">" + "&nbsp;" +
-                            data.get(i).get("groupDescription") + "</div><div style=\"float:right;padding-right:.4em;max-width:1em\">" + "(" +
-                            data.get(i).get("availableCount") + ")" +
+                            data.get(i).get("groupDescription") + " " +
+                            favorite +
+                            "</div><div style=\"float:right;padding-right:.4em;max-width:1em\">" + 
+                            "(" +
+                            data.get(i).get("availableCount") + ")" + 
                             "</div></div>" +
                             "</a>");
                 
@@ -318,6 +378,7 @@ public class TestServlet extends HttpServlet {
             Logger.getLogger(TestServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
 
 }
 //http://localhost:8084/openLabs/TestServlet#/openLabs/LabDetailServlet?name=YoungLab

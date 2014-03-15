@@ -44,7 +44,11 @@ public class loginPage extends HttpServlet {
             
             
             
-            out.println("<form name=\"login\" action=\"Login\" method=\"post\">");
+            //out.println("<form name=\"login\" action=\"Login\" method=\"post\">");
+            out.println("<form name=\"login\" action=\"LabDetailServlet"
+                    + "?name="
+                    + (request.getParameter("name"))
+                    + "\" method=\"post\">");
             out.println("User Name: <input type=\"text\" name=\"uname\">");
             out.println("Password : <input type=\"password\" name=\"pword\">");
             out.println("<input type=\"submit\" value=\"submit\">");
