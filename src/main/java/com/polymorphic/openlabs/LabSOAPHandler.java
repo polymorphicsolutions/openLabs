@@ -109,11 +109,14 @@ public class LabSOAPHandler {
     
     public void addFavorites(ArrayList<String> favorited,
                              ArrayList<HashMap<String,String>> labData){
+        for(int i=0; i < labData.size(); i++){
+            labData.get(i).put("favorite","B");
+        }
+        
         for(int i = 0; i < favorited.size(); i++){
             for(int j = 0; j < labData.size(); j++){
-                if(favorited.get(i).equals(
-                   labData.get(j).get("groupId"))){
-                    labData.get(j).put("favorite","true");
+                if(favorited.get(i).equals(labData.get(j).get("groupId"))){
+                        labData.get(j).put("favorite","A");
                 }
             }
         }

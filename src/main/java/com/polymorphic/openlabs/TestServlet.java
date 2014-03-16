@@ -324,6 +324,10 @@ public class TestServlet extends HttpServlet {
                 Collections.sort(data, new labArrayHashComparator(toSortBy));
             }
             
+            //favorite sort
+            Collections.sort(data, new labArrayHashComparator("favorite"));
+            
+            
             //todo:make sure this isn't goofing up sort
             //Collections.sort(data, new labArrayHashComparator("favorite"));
             
@@ -344,6 +348,7 @@ public class TestServlet extends HttpServlet {
                     light = "redlight.png";
                 }
                 
+                //TODO should this be altered since favorite info is stored in data?
                 String favorite = " =( ";
                 for(int j = 0; j < favorites.size(); j++){
                     if(favorites.get(j).equals(data.get(i).get("groupId"))){
