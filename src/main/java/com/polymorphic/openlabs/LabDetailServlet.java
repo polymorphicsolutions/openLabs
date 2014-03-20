@@ -221,6 +221,7 @@ public class LabDetailServlet extends HttpServlet {
                 out.println("<h2>" + labData.get("groupDescription") + "</h1>");
                 out.println("<h3>" + labData.get("totalCount") + " computers total </h3>");
                 out.println("<h3>" + labData.get("availableCount") + " computers unocupied </h3>");
+                //TODO Use JDBC connection to print rest of information about the lab
             } else {
                 out.println("No lab was specified. Or, data could not be retrieved");
             }
