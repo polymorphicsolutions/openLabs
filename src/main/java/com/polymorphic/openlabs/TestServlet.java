@@ -235,7 +235,7 @@ public class TestServlet extends HttpServlet {
             out.println("    <div data-role=\"page\" class=\"page\">");
             out.println("");
             out.println("      <div data-role=\"header\" data-theme=\"a\" class=\"head\" data-position=\"fixed\">");
-            out.println("        <button onclick=\"location.reload(true)\" data-icon=\"refresh\" class=\"ui-btn-left\">Refresh</button>");
+            out.println("        <button onclick=\"location.reload(true)\" data-icon=\"refresh\" class=\"ui-btn-left\" data-inline=\"true\">Refresh</button>");
             out.println("        <!--<h1>Radford University</h1>-->");
             out.println("        <h1>Open Labs</h1>");
             printSortMenu(out);
@@ -299,7 +299,9 @@ public class TestServlet extends HttpServlet {
     
     //HttpServletRequest request, HttpServletResponse response
     private void printLabs(PrintWriter out, HttpServletRequest request, HttpServletResponse response){
-        LabSOAPHandler lsh = new LabSOAPHandler();
+        DataHandler dh;
+        dh = new DataHandler();
+        //LabSOAPHandler lsh = new LabSOAPHandler();
         try {
             ArrayList<String> favorites = SessionHandler.favoriteCheck(request);
             if(nFavorite != null){
@@ -307,8 +309,8 @@ public class TestServlet extends HttpServlet {
             if(nUnFavorite != null){
                 favorites.remove(nUnFavorite);}
             
-            ArrayList<HashMap<String,String>> data = lsh.getData();
-            lsh.addFavorites(favorites, data);
+            ArrayList<HashMap<String,String>> data = dh.getData();
+            dh.addFavorites(favorites, data);
             
             String toSortBy = request.getParameter("sortBy");
             

@@ -160,4 +160,8 @@ public class SessionHandler {
         return null;
     }
     
+    public static void handleAdminEdits(HttpSession sess, HttpServletRequest req){
+        //TODO make this     
+    }
+    
 }

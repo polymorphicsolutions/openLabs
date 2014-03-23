@@ -49,8 +49,8 @@ public class loginPage extends HttpServlet {
                     + "?name="
                     + (request.getParameter("name"))
                     + "\" method=\"post\">");
-            out.println("User Name: <input type=\"text\" name=\"uname\">");
-            out.println("Password : <input type=\"password\" name=\"pword\">");
+            out.println("User Name: <input type=\"text\" name=\"uname\" value=\"admin\" >");
+            out.println("Password : <input type=\"password\" name=\"pword\" value=\"pass\" >");
             out.println("<input type=\"submit\" value=\"submit\">");
             out.println("</form>");
             out.println("</body>");

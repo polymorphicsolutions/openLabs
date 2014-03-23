@@ -25,7 +25,8 @@ import javax.servlet.http.HttpSession;
  */
 public class LabDetailServlet extends HttpServlet {
     
-
+    StringBuilder DebugStr;
+    
     String selectedLabName;
 
     boolean admin;
@@ -45,12 +46,83 @@ public class LabDetailServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             
+            DebugStr = new StringBuilder("");
+            
             admin = SessionHandler.checkAdmin(request.getSession(),request);
             
             //SessionHandler.checkNewFavorite(response,request);
             
             selectedLabName = "";
             selectedLabName = request.getParameter("name");
+            
+            
+            DataHandler dh = new DataHandler();
+            //todo: handle this refresh required 
+            //todo: handle selectedLabName == null
+            
+            try{
+                if(request.getParameter("MondayTime0").equals(null)){
+                    //nothing
+                } else {
+
+                    System.out.println("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh");
+                    ArrayList<ArrayList<String>> schedChanges = dh.checkLabDetailChange(selectedLabName,request);
+                    System.out.println("FUCKKKKKKKK");
+                    //out.println(schedChanges.size() + "*/*/");
+
+                    if((schedChanges.size() > 6)){
+                        System.out.println("SSSSSSFFFFFFFFFFDDDDDDDD");
+                        for(int i=0; i< schedChanges.size(); i++){
+                            ArrayList<String> curDay = schedChanges.get(i);
+                            if(curDay.size() > 0){
+                                System.out.println("QWERT");
+                                for(int j=0; j<curDay.size(); j=j+2){
+                                    System.out.println(curDay.get(j));
+                                    System.out.println(curDay.get(j+1));
+                                    DebugStr.append("/n" + curDay.get(j) + " " + curDay.get(j+1) + "<br>");
+                                    System.out.println("DEBUG:" + DebugStr);
+                                }
+                            }
+                            out.println("\n");
+                        }
+                    }
+                    System.out.println("DDDDDDDDDDDDDDSSSSSSFFFFFFFFFFDDDDDDDD");
+                
+                }                
+                
+            }catch(Exception e){
+                //TODO: something
+                //out.println(e.toString());
+            }
+            
+            System.out.println("AA");
+            
+            DebugStr.append("<hr>");
+            
+            System.out.println("AA");
+            System.out.println("AA");
+            ArrayList<String> soft = dh.checkNewSoftware(selectedLabName, request);
+            System.out.println("BB");
+            System.out.println("BB");
+            DebugStr.append("New software:<br>");
+            for(int i=0; i<soft.size(); i++){
+                //print software? add it to debugStr?
+                DebugStr.append(soft.get(i));
+                DebugStr.append("<br>");
+            }
+            
+            
+            
+            ArrayList<String> curSW = dh.getSoftware(selectedLabName);
+            ArrayList<String> softRemove = dh.checkRemoveSoftware(selectedLabName, request, curSW.size());
+            DebugStr.append("Removed Software: <br>");
+            for(int i = 0; i < softRemove.size(); i++){
+                DebugStr.append(softRemove.get(i));
+                DebugStr.append("<br>");
+            }
+            
+            
+            
                        
             out.println("<!DOCTYPE html> ");
             out.println("<html> ");
@@ -186,7 +258,7 @@ public class LabDetailServlet extends HttpServlet {
             out.println("    <div data-role=\"page\" class=\"page\">");
             out.println("");
             out.println("      <div data-role=\"header\" data-theme=\"a\" class=\"head\" data-position=\"fixed\">");
-            out.println("        <button onclick=\"location.reload(true)\" data-icon=\"refresh\" class=\"ui-btn-left\">Refresh</button>");
+            out.println("        <button onclick=\"location.reload(true)\" data-icon=\"refresh\" class=\"ui-btn-left\" data-inline=\"true\">Refresh</button>");
             out.println("        <!--<h1>Radford University</h1>-->");
             out.println("        <h1>Open Labs</h1>");
             out.println("        <a href=\"settings.html\" data-icon=\"gear\" class=\"ui-btn-right\">Settings</a>");
@@ -203,6 +275,17 @@ public class LabDetailServlet extends HttpServlet {
             } else {
                 printLabsAdmin(out,response, request);
             }
+            
+            
+            
+            out.println("<h1>");
+            out.println(DebugStr.toString());
+            out.println("</h1>");
+            
+            
+            
+            
+            
             out.println("");
             out.println("      <div data-role=\"footer\" data-theme=\"a\" class=\"foot\" data-position=\"fixed\">");
             //out.println("        <h4>Radford University</h4>");
@@ -234,7 +317,6 @@ public class LabDetailServlet extends HttpServlet {
     }
     
     private void printLabs(PrintWriter out, HttpServletResponse response, HttpServletRequest req){
-        
         LabSOAPHandler lsh = new LabSOAPHandler();
         
         try {
@@ -252,99 +334,20 @@ public class LabDetailServlet extends HttpServlet {
                 out.println("<h3>" + labData.get("totalCount") + " computers total </h3>");
                 out.println("<h3>" + labData.get("availableCount") + " computers unocupied </h3>");
                 out.println("<hr>");
-                out.println("<table>");
-                out.println("  <tr>");
-                out.println("    <td>");
-                out.println("      M");
-                out.println("    </td>");
-                out.println("    <td>");
-                out.println("      6:00 - 12:00 (bad data)");
-                out.println("    </td>");
-                out.println("  </tr>");
-                out.println("  <tr>");
-                out.println("    <td>");
-                out.println("      T");
-                out.println("    </td>");
-                out.println("    <td>");
-                out.println("      6:00 - 12:00 (bad data)");
-                out.println("    </td>");
-                out.println("  </tr>");
-                out.println("  <tr>");
-                out.println("    <td>");
-                out.println("      W");
-                out.println("    </td>");
-                out.println("    <td>");
-                out.println("      6:00 - 12:00 (bad data)");
-                out.println("    </td>");
-                out.println("  </tr>");
-                out.println("  <tr>");
-                out.println("    <td>");
-                out.println("      TR");
-                out.println("    </td>");
-                out.println("    <td>");
-                out.println("      6:00 - 12:00 (bad data)");
-                out.println("    </td>");
-                out.println("  </tr>");
-                out.println("  <tr>");
-                out.println("    <td>");
-                out.println("      F");
-                out.println("    </td>");
-                out.println("    <td>");
-                out.println("      6:00 - 12:00 (bad data)");
-                out.println("    </td>");
-                out.println("  </tr>");
-                out.println("  <tr>");
-                out.println("    <td>");
-                out.println("      Sa");
-                out.println("    </td>");
-                out.println("    <td>");
-                out.println("      6:00 - 12:00 (bad data)");
-                out.println("    </td>");
-                out.println("  </tr>");
-                out.println("  <tr>");
-                out.println("    <td>");
-                out.println("      Su");
-                out.println("    </td>");
-                out.println("    <td>");
-                out.println("      6:00 - 12:00 (bad data)");
-                out.println("    </td>");
-                out.println("  </tr>");
-                out.println("</table>");
+
+                //TODO: PRINT LABHOURS
+                //printLabAdminForm(out,response,req);
+                printHours(out,response,req,false);
+                printSoftware(out,response,req,false);
+                //printLabAdminFormClose(out,response,req);
                 
-                out.println("<br><br>");
                 
-                out.println("<table>");
-                out.println("  <tr>");
-                out.println("    <td>");
-                out.println("Available Sofware");
-                out.println("    </td>");
-                out.println("  </tr>");
-                out.println("</table>");
-                
-                out.println("<br>");
-                
-                if(SessionHandler.favoriteCheck(req, selectedLabName)){
-                    out.println("<a href=\"TestServlet?unFavorite=" + 
-                            selectedLabName
-                            + "\">UnFavorite</a>");
-                }
-                else {
-                    out.println("<a href=\"TestServlet?favorite=" + 
-                            selectedLabName
-                            + "\">Favorite</a>");
-                }
-                
-                out.println("<br>");
             } else {
                 out.println("No lab was specified. Or data could not be retrieved");
             }
         } catch (Exception ex) {
             //Logger.getLogger(TestServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        /*
-        out.println("<button class=\"ui-btn\">" +
-                    selectedLabName +
-                    "</button>");*/
+        }       
 
     }
 
@@ -367,76 +370,12 @@ public class LabDetailServlet extends HttpServlet {
                 out.println("<h3>" + labData.get("totalCount") + " computers total </h3>");
                 out.println("<h3>" + labData.get("availableCount") + " computers unocupied </h3>");
                 out.println("<hr>");
-                out.println("<table>");
-                out.println("  <tr>");
-                out.println("    <td>");
-                out.println("      M");
-                out.println("    </td>");
-                out.println("    <td>");
-                out.println("      6:00 - 12:00 (bad data)");
-                out.println("    </td>");
-                out.println("  </tr>");
-                out.println("  <tr>");
-                out.println("    <td>");
-                out.println("      T");
-                out.println("    </td>");
-                out.println("    <td>");
-                out.println("      6:00 - 12:00 (bad data)");
-                out.println("    </td>");
-                out.println("  </tr>");
-                out.println("  <tr>");
-                out.println("    <td>");
-                out.println("      W");
-                out.println("    </td>");
-                out.println("    <td>");
-                out.println("      6:00 - 12:00 (bad data)");
-                out.println("    </td>");
-                out.println("  </tr>");
-                out.println("  <tr>");
-                out.println("    <td>");
-                out.println("      TR");
-                out.println("    </td>");
-                out.println("    <td>");
-                out.println("      6:00 - 12:00 (bad data)");
-                out.println("    </td>");
-                out.println("  </tr>");
-                out.println("  <tr>");
-                out.println("    <td>");
-                out.println("      F");
-                out.println("    </td>");
-                out.println("    <td>");
-                out.println("      6:00 - 12:00 (bad data)");
-                out.println("    </td>");
-                out.println("  </tr>");
-                out.println("  <tr>");
-                out.println("    <td>");
-                out.println("      Sa");
-                out.println("    </td>");
-                out.println("    <td>");
-                out.println("      6:00 - 12:00 (bad data)");
-                out.println("    </td>");
-                out.println("  </tr>");
-                out.println("  <tr>");
-                out.println("    <td>");
-                out.println("      Su");
-                out.println("    </td>");
-                out.println("    <td>");
-                out.println("      <input type=\"text\" value=\"6:00 - 12:00 (bad data)\"/>");
-                out.println("    </td>");
-                out.println("  </tr>");
-                out.println("</table>");
-                
-                out.println("<br><br>");
-                
-                out.println("<table>");
-                out.println("  <tr>");
-                out.println("    <td>");
-                out.println("Available Sofware");
-                out.println("    </td>");
-                out.println("  </tr>");
-                out.println("</table>");
-                
-                
+
+                //TODO: PRINT LABHOURS
+                printLabAdminForm(out,response,req);
+                printHours(out,response,req,true);
+                printSoftware(out,response,req,true);
+                printLabAdminFormClose(out,response,req);
                 
             } else {
                 out.println("No lab was specified. Or data could not be retrieved");
@@ -445,8 +384,145 @@ public class LabDetailServlet extends HttpServlet {
             //Logger.getLogger(TestServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }    
+    }
     
+    private void printLabAdminForm(PrintWriter out, HttpServletResponse reqponse, HttpServletRequest req){
+        out.println("<form name=\"edits\" action=\"LabDetailServlet"
+                + "?name="
+                + selectedLabName
+                + "\" method=\"post\">");
+        
+    }
+    
+    private void printLabAdminFormClose(PrintWriter out, HttpServletResponse reqponse, HttpServletRequest req){
+        out.println("<input type=\"submit\" value=\"submit\">");
+        out.println("</form>");
+    }
+    
+    private void printHours(PrintWriter out, HttpServletResponse response, HttpServletRequest req, boolean admin){
+        DataHandler dh = new DataHandler();
+        DSchedule schedule = dh.getSchedule(selectedLabName);
+        
+        out.println("<h3>Schedule:</h3>");
+        out.println("<table>");
+        printScheduleDay("Monday", schedule.getDay(0), out, admin);
+        printScheduleDay("Tuesday", schedule.getDay(1), out, admin);
+        printScheduleDay("Wednesday", schedule.getDay(2), out, admin);
+        printScheduleDay("Thursday", schedule.getDay(3), out, admin);
+        printScheduleDay("Friday", schedule.getDay(4), out, admin);
+        printScheduleDay("Saturday", schedule.getDay(5), out, admin);
+        printScheduleDay("Sunday", schedule.getDay(6), out, admin);
+        out.println("</table>");
+        out.println("<hr>");
+        
+        out.println("");
+    }
+    
+    private void printSoftware(PrintWriter out, HttpServletResponse response, HttpServletRequest req, boolean admin){
+        DataHandler dh = new DataHandler();
+        ArrayList<String> software = dh.getSoftware(selectedLabName);
+        
+        
+        out.println("<h3>Software:</h3>");
+        out.println("<table>");
+        
+        for(int i=0; i<software.size();i++){
+            if(admin == true){
+                out.println("  <tr>");
+                out.println("    <td>");
+                out.println("<input type=\"checkbox\" name=\""
+                        + "toRemove" + Integer.toString(i)
+                        + "\" value=\""
+                        + software.get(i)
+                        + "\" />");
+                out.println("    </td>");
+                out.println("    <td>");
+                out.println(software.get(i));
+                out.println("    </td>");
+                out.println("  </tr>");
+                
+            } else {
+                out.println("<tr>");
+                out.println("  <td></td>");
+                out.println("  <td>");
+                out.println(software.get(i));
+                out.println("  </td>");
+                out.println("</tr>");
+            }
+        }
+        out.println("</table>");
+        
+        
+        if(admin){
+            out.println("<table>");
+            out.println("  <tr>");
+            out.println("    <td>");
+            out.println("      New Software: ");
+            out.println("    </td>");
+            out.println("    <td>");
+            out.println("      <input type=\"text\" name=\"newSoftware0\" />");      
+            out.println("    </td>");
+            out.println("  </tr>");
+            out.println("  <tr>");
+            out.println("    <td>");
+            out.println("    </td>");
+            out.println("    <td>");
+            out.println("      <input type=\"text\" name=\"newSoftware1\" />");
+            out.println("    </td>");
+            out.println( "  </tr>");
+            out.println("  <tr>");
+            out.println("    <td>");
+            out.println("    </td>");
+            out.println("    <td>");
+            out.println("      <input type=\"text\" name=\"newSoftware2\" />");
+            out.println("    </td>");
+            out.println("  </tr>");
+            out.println("</table>");
+        }
+        
+    }
+    
+    private void printScheduleDay(String day, DScheduleDay pDay,
+            PrintWriter out, boolean admin){
+        out.println("  <tr>");
+        out.println("    <td>");
+        out.println("       " + day);
+        out.println("    </td>");
+        
+        for(int i = 0; i < pDay.getSlotCount(); i++){
+            
+            ArrayList<String> slot = pDay.getSlot(i);
+            
+            if (i != 0){
+                out.println("  <tr>");
+                out.println("    <td>");
+                out.println("    </td>");
+            }
+
+            out.println("    <td>");
+            if(admin){
+            out.println("      <input type=\"text\" " +
+                        "\" name=\"" + day + "Time" + i + "\" " +
+                        "value=\"" + slot.get(0) + "-" + slot.get(1) + "\" >" );
+            } else {
+                out.println("      " + slot.get(0) + "-" + slot.get(1));
+            }
+
+            out.println("    </td>");
+            out.println("  </tr>");
+                    
+
+        }
+        if(admin){
+            out.println("  <tr>");
+            out.println("    <td>");
+            out.println("    </td>");
+            out.println("    <td>");
+            out.println("      " + "<input type=\"text\" name=\"lname\" >");
+            out.println("    </td>");
+            out.println("  </tr>");
+        }
+    }
     
     
     
