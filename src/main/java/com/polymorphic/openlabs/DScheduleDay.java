@@ -18,6 +18,7 @@ public class DScheduleDay {
     
     public DScheduleDay(){
         slots = new ArrayList<ArrayList<String>>();
+        /*
         
         ArrayList<String> slot1 = new ArrayList<String>();
         slot1.add("1000");
@@ -34,6 +35,8 @@ public class DScheduleDay {
         slots.add(slot1);
         slots.add(slot2);
         slots.add(slot3);
+                
+                */
     }
     
     public int getSlotCount(){
