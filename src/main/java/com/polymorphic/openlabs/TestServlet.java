@@ -138,12 +138,12 @@ public class TestServlet extends HttpServlet {
             out.println("    <link rel=\"stylesheet\" href=\"themes/openLabsTheme.min.css\" /> ");
             //out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.3.2/jquery.mobile.structure-1.3.2.min.css\" /> ");
             out.println("    <title>Open Labs</title>  ");
-            //out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css\" /> ");
-            out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.css\" /> ");
-            //out.println("    <script src=\"http://code.jquery.com/jquery-1.8.3.min.js\"></script> ");
-            //out.println("    <script src=\"http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js\"></script> ");
-            out.println("    <script src=\"http://code.jquery.com/jquery-1.9.1.min.js\"></script> ");
-            out.println("    <script src=\"http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js\"></script> ");
+            out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css\" /> ");
+            //out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.css\" /> ");
+            out.println("    <script src=\"http://code.jquery.com/jquery-1.8.3.min.js\"></script> ");
+            out.println("    <script src=\"http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js\"></script> ");
+            //out.println("    <script src=\"http://code.jquery.com/jquery-1.9.1.min.js\"></script> ");
+            //out.println("    <script src=\"http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js\"></script> ");
             out.println("    <script> ");
             out.println("      var incoming = window.location.search; ");
             out.println("      if (incoming.substring(0, 1) === '?') ");
