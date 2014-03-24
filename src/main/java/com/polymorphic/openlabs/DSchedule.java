@@ -22,10 +22,23 @@ public class DSchedule {
     public DSchedule(){
         days = new ArrayList<DScheduleDay>();
         
+        /*
+        days = new ArrayList<DScheduleDay>();
+        
         for(int i=0; i < 7; i++){
             days.add(new DScheduleDay());            
         }
+                */
         
+    }
+    
+    public void setDay(ArrayList<ArrayList<String>> daySlot, int day){
+        DScheduleDay whatever = new DScheduleDay();
+        
+        for(int i = 0; i < daySlot.size(); i++ ){
+            whatever.setNewSlot(daySlot.get(i).get(0),
+                                daySlot.get(i).get(1));
+        }
     }
     
     public void setDaySchedule(DScheduleDay pDay, int dayNum){

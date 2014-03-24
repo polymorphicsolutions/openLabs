@@ -277,11 +277,11 @@ public class LabDetailServlet extends HttpServlet {
             }
             
             
-            
-            out.println("<h1>");
-            out.println(DebugStr.toString());
-            out.println("</h1>");
-            
+            if(admin == true){
+                out.println("<h1>");
+                out.println(DebugStr.toString());
+                out.println("</h1>");
+            }
             
             
             

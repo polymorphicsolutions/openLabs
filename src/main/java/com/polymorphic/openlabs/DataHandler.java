@@ -52,17 +52,39 @@ public class DataHandler {
     
     public DSchedule getSchedule(String LabID){
         //dbHandler.getHours
+        databaseHandler dbH = new databaseHandler();
+        
+        ArrayList<ArrayList<String>> mon = dbH.getScheduleByDay(LabID, "Monday");
+        ArrayList<ArrayList<String>> tue = dbH.getScheduleByDay(LabID, "Tuesday");
+        ArrayList<ArrayList<String>> wed = dbH.getScheduleByDay(LabID, "Wednesday");
+        ArrayList<ArrayList<String>> thu = dbH.getScheduleByDay(LabID, "Thursday");
+        ArrayList<ArrayList<String>> fri = dbH.getScheduleByDay(LabID, "Friday");
+        ArrayList<ArrayList<String>> sat = dbH.getScheduleByDay(LabID, "Saturday");
+        ArrayList<ArrayList<String>> sun = dbH.getScheduleByDay(LabID, "Sunday");
+
         DSchedule ds = new DSchedule();
+        ds.setDay(mon,0);
+        ds.setDay(tue,1);
+        ds.setDay(wed,2);
+        ds.setDay(thu,3);
+        ds.setDay(fri,4);
+        ds.setDay(sat,5);
+        ds.setDay(sun,6);
+
         return ds;
     }
     
     public ArrayList<String> getSoftware(String LabID){
+        databaseHandler dbH = new databaseHandler();
+        return dbH.getSoftware(LabID);
+        
+        /*
         ArrayList<String> software = new ArrayList<String>();
         software.add("Office");
         software.add("Photoshop");
         software.add("Blender");
         
-        return software;
+        return software;*/
     }
     
     public ArrayList<String> checkNewSoftware(String LabID, HttpServletRequest req){
