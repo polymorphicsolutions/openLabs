@@ -185,8 +185,8 @@ public class LabDetailServlet extends HttpServlet {
             out.println("  <head> ");
             out.println("    <meta charset=\"utf-8\"> ");
             out.println("    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0\"/> ");
-            out.println("    <link rel=\"stylesheet\" href=\"themes/openLabsTheme.min.css\" /> ");
-            out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.3.2/jquery.mobile.structure-1.3.2.min.css\" /> ");
+            //out.println("    <link rel=\"stylesheet\" href=\"themes/openLabsTheme.min.css\" /> ");
+            //out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.3.2/jquery.mobile.structure-1.3.2.min.css\" /> ");
             out.println("    <title>Open Labs</title>  ");
             out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css\" /> ");
             out.println("    <script src=\"http://code.jquery.com/jquery-1.8.3.min.js\"></script> ");
@@ -212,6 +212,7 @@ public class LabDetailServlet extends HttpServlet {
             out.println("        margin: 0 auto; ");
             out.println("        overflow-x: hidden; ");
             out.println("        background:#001f44; ");
+            out.println("        color: white;");
             out.println("      } ");
             out.println("      h1, h4 ");
             out.println("      { ");
@@ -239,6 +240,9 @@ public class LabDetailServlet extends HttpServlet {
             out.println("        width: 350px; ");
             out.println("        background:#001f44; ");
             out.println("      } ");
+            out.println("      h2, h3, td { ");
+            out.println("        color: white; ");
+            out.println("      } ");
             out.println("    </style> ");
             out.println("  </head>  ");
             //*/
@@ -264,10 +268,10 @@ public class LabDetailServlet extends HttpServlet {
             out.println("        <a href=\"settings.html\" data-icon=\"gear\" class=\"ui-btn-right\">Settings</a>");
             out.println("      </div><!-- /header -->");
             out.println("");
-            out.println("      <!--<div data-role=\"fieldcontain\">");
+            out.println("      <!--<div data-role=\"fieldcontain\">-->");
             out.println("      <!--<label for=\"search-2\">Search Labs:</label>-->");
             out.println("      <input type=\"search\" name=\"search-2\" id=\"search-2\" value=\"Search\" class=\"searchbar\" />");
-            out.println("      <!--</div>-->");
+            
             out.println("");
             
             if(admin == false){
@@ -330,14 +334,13 @@ public class LabDetailServlet extends HttpServlet {
             }
             
             if(labData.size() > 0){
-                out.println("<h2>" + labData.get("groupDescription") + "</h1>");
+                out.println("<h2>" + labData.get("groupDescription") + "</h2>");
                 out.println("<h3>" + labData.get("totalCount") + " computers total </h3>");
                 out.println("<h3>" + labData.get("availableCount") + " computers unocupied </h3>");
-                out.println("<hr>");
 
                 //TODO: PRINT LABHOURS
                 //printLabAdminForm(out,response,req);
-                printHours(out,response,req,false);
+                //printHours(out,response,req,false);
                 printSoftware(out,response,req,false);
                 //printLabAdminFormClose(out,response,req);
                 
@@ -373,7 +376,7 @@ public class LabDetailServlet extends HttpServlet {
 
                 //TODO: PRINT LABHOURS
                 printLabAdminForm(out,response,req);
-                printHours(out,response,req,true);
+               // printHours(out,response,req,true);
                 printSoftware(out,response,req,true);
                 printLabAdminFormClose(out,response,req);
                 
@@ -418,66 +421,67 @@ public class LabDetailServlet extends HttpServlet {
         out.println("");
     }
     
-    private void printSoftware(PrintWriter out, HttpServletResponse response, HttpServletRequest req, boolean admin){
+    private void printSoftware(PrintWriter out, HttpServletResponse response, HttpServletRequest req, boolean admin) throws IOException{
+        PrintWriter out2 = response.getWriter();
         DataHandler dh = new DataHandler();
         ArrayList<String> software = dh.getSoftware(selectedLabName);
         
         
-        out.println("<h3>Software:</h3>");
-        out.println("<table>");
+        out2.println("<h3>Software:</h3>");
+        out2.println("<table>");
         
         for(int i=0; i<software.size();i++){
             if(admin == true){
-                out.println("  <tr>");
-                out.println("    <td>");
-                out.println("<input type=\"checkbox\" name=\""
+                out2.println("  <tr>");
+                out2.println("    <td>");
+                out2.println("<input type=\"checkbox\" name=\""
                         + "toRemove" + Integer.toString(i)
                         + "\" value=\""
                         + software.get(i)
                         + "\" />");
-                out.println("    </td>");
-                out.println("    <td>");
-                out.println(software.get(i));
-                out.println("    </td>");
-                out.println("  </tr>");
+                out2.println("    </td>");
+                out2.println("    <td>");
+                out2.println(software.get(i));
+                out2.println("    </td>");
+                out2.println("  </tr>");
                 
             } else {
-                out.println("<tr>");
-                out.println("  <td></td>");
-                out.println("  <td>");
-                out.println(software.get(i));
-                out.println("  </td>");
-                out.println("</tr>");
+                out2.println("<tr>");
+                out2.println("  <td></td>");
+                out2.println("  <td>");
+                out2.println(software.get(i));
+                out2.println("  </td>");
+                out2.println("</tr>");
             }
         }
-        out.println("</table>");
+        out2.println("</table>");
         
         
         if(admin){
-            out.println("<table>");
-            out.println("  <tr>");
-            out.println("    <td>");
-            out.println("      New Software: ");
-            out.println("    </td>");
-            out.println("    <td>");
-            out.println("      <input type=\"text\" name=\"newSoftware0\" />");      
-            out.println("    </td>");
-            out.println("  </tr>");
-            out.println("  <tr>");
-            out.println("    <td>");
-            out.println("    </td>");
-            out.println("    <td>");
-            out.println("      <input type=\"text\" name=\"newSoftware1\" />");
-            out.println("    </td>");
-            out.println( "  </tr>");
-            out.println("  <tr>");
-            out.println("    <td>");
-            out.println("    </td>");
-            out.println("    <td>");
-            out.println("      <input type=\"text\" name=\"newSoftware2\" />");
-            out.println("    </td>");
-            out.println("  </tr>");
-            out.println("</table>");
+            out2.println("<table>");
+            out2.println("  <tr>");
+            out2.println("    <td>");
+            out2.println("      New Software: ");
+            out2.println("    </td>");
+            out2.println("    <td>");
+            out2.println("      <input type=\"text\" name=\"newSoftware0\" />");      
+            out2.println("    </td>");
+            out2.println("  </tr>");
+            out2.println("  <tr>");
+            out2.println("    <td>");
+            out2.println("    </td>");
+            out2.println("    <td>");
+            out2.println("      <input type=\"text\" name=\"newSoftware1\" />");
+            out2.println("    </td>");
+            out2.println( "  </tr>");
+            out2.println("  <tr>");
+            out2.println("    <td>");
+            out2.println("    </td>");
+            out2.println("    <td>");
+            out2.println("      <input type=\"text\" name=\"newSoftware2\" />");
+            out2.println("    </td>");
+            out2.println("  </tr>");
+            out2.println("</table>");
         }
         
     }
