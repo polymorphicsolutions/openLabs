@@ -135,15 +135,26 @@ public class TestServlet extends HttpServlet {
             
             
             out.println("    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0\"/> ");
+            
+            
             out.println("    <link rel=\"stylesheet\" href=\"themes/openLabsTheme.min.css\" /> ");
             //out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.3.2/jquery.mobile.structure-1.3.2.min.css\" /> ");
+            
+            
             out.println("    <title>Open Labs</title>  ");
+            
+            
+            
             out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css\" /> ");
             //out.println("    <link rel=\"stylesheet\" href=\"http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.css\" /> ");
+            
             out.println("    <script src=\"http://code.jquery.com/jquery-1.8.3.min.js\"></script> ");
             out.println("    <script src=\"http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js\"></script> ");
             //out.println("    <script src=\"http://code.jquery.com/jquery-1.9.1.min.js\"></script> ");
             //out.println("    <script src=\"http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js\"></script> ");
+            
+            
+            
             out.println("    <script> ");
             out.println("      var incoming = window.location.search; ");
             out.println("      if (incoming.substring(0, 1) === '?') ");
@@ -266,9 +277,10 @@ public class TestServlet extends HttpServlet {
     }
     
     private void printSearchBar(PrintWriter out){
-        out.println("<form>");
-        out.println("   <input type=\"text\" data-type=\"search\" id=\"filterable-input\">");
-        out.println("</form>");
+        //out.println("<form>");
+        out.println("<ul data-role=\"listview\" data-filter=\"true\" data-insert=\"true\" style=\"margin-right: auto; margin-left: auto;width: 400px\">");
+        //out.println("   <input type=\"text\" data-type=\"search\" id=\"filterable-input\">");
+        //out.println("</form>");
     }
     
     private void printSortMenu(PrintWriter out){
@@ -336,7 +348,7 @@ public class TestServlet extends HttpServlet {
             out.println("<div class=\"header\"><div style=\"float:left\">Name</div><div style=\"float:right\">Available Spots</div></div>");
             
             //filter stuff
-            out.println("<form data-filter=\"true\" data-input=\"#filterable-input\">");
+            //out.println("<form data-filter=\"true\" data-input=\"#filterable-input\">");
             
             for(int i = 0; i < data.size(); i++){
                 double percent = Double.parseDouble(data.get(i).get("percentInUse"));
@@ -363,6 +375,23 @@ public class TestServlet extends HttpServlet {
                 //todo: change this to string appends
                 //<button class="ui-btn">Button</button>
                 //out.println("<button class=\"ui-btn\">" +
+                
+                //todo: make address a variable
+                out.println("<li style=\"margin: 5px\">	<a href=\"http://localhost:8084/openLabs/LabDetailServlet?name="
+                        + data.get(i).get("groupId").replaceAll("\\s", "")
+                        + "\"><div class\"container\"=\"\"><div class=\"left\" style=\"float:left;white-space:nowrap;overflow:hidden\"><img src=\""
+                        + light
+                        + "\" alt=\""
+                        + light
+                        + "\">&nbsp;"
+                        + data.get(i).get("groupDescription") + " "
+                        + favorite 
+                        + "</div><div style=\"float:right;padding-right:.4em;max-width:1em\">("
+                        + data.get(i).get("availableCount")
+                        + ")</div></div></a>	</li>");
+//<div class"container"=""><div class="left" style="float:left;white-space:nowrap;overflow:hidden"><img src="./testHTML_files/greenlight.png" alt=" greenlight.png">&nbsp;COBE 152 - Business Center  =( </div><div style="float:right;padding-right:.4em;max-width:1em">(1)</div></div></a>	</li>
+//<li style="margin: 5px">	<a href="http://localhost:8084/openLabs/LabDetailServlet?name=32"><div class"container"=""><div class="left" style="float:left;white-space:nowrap;overflow:hidden"><img src="./testHTML_files/greenlight.png" alt=" greenlight.png">&nbsp;COBE 152 - Business Center  =( </div><div style="float:right;padding-right:.4em;max-width:1em">(1)</div></div></a>	</li>
+                /*
                 out.println("<a href=\"LabDetailServlet?name=" +
                             data.get(i).get("groupId").replaceAll("\\s", "") +
                             "\" data-role=\"button\" data-icon=\"arrow-r\" data-iconpos=\"right\" class=\"buttons\" >" + 
@@ -374,13 +403,13 @@ public class TestServlet extends HttpServlet {
                             data.get(i).get("availableCount") + ")" + 
                             "</div></div>" +
                             "</a>");
-                
+                */
                 //available = total - (inUse + offCount)
                 
             }
             
             //filterable close
-            out.println("</form>");
+            out.println("</ul>");
         } catch (Exception ex) {
             Logger.getLogger(TestServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
